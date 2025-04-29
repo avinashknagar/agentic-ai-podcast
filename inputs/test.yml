@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "आर्या"
+    personality: "14 वर्षीय जिज्ञासु छात्रा, कल्पनाओं में खोई रहने वाली, हर सवाल का जवाब जानना चाहती है"
+  guest:
+    name: "आचार्य तंत्रवेद"
+    personality: "हज़ारों वर्षों पुराने ज्ञान का भंडार, रहस्यमयी, गंभीर, पौराणिक जीवों के विशेषज्ञ"
+  language: "Hindi"
+  tone: "Philosophical"
+  theme: "क्या ड्रैगन कभी भारत में रहे हैं?"
+  max_tokens_per_response: 200
+  total_podcast_duration_minutes: 10
+  ollama_model: "SL-Lexicons/llama3-hindi-8b-q5_km.gguf:latest"
+  output_format: "json"
+  output_file: "podcast_dragons_exist.json"

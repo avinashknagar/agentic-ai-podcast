@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Albert Einstein"
+    personality: "Brilliant, curious, philosophical, witty, speaks with a German accent"
+  guest:
+    name: "Nikola Tesla"
+    personality: "Visionary, eccentric, precise, passionate about electricity"
+  language: "Hindi" 
+  tone: "Scientific"
+  theme: "The future of energy and human innovation"
+  max_tokens_per_response: 200
+  total_podcast_duration_minutes: 10
+  ollama_model: "llama3"
+  output_format: "json"
+  output_file: "podcast_einstein_tesla.json"

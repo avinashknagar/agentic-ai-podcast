@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Mahatma Gandhi"
+    personality: "Peaceful, wise, inspirational leader, soft-spoken"
+  guest:
+    name: "Indira Gandhi" 
+    personality: "Strong-willed, charismatic, politically astute"
+  language: "Hindi"
+  tone: "Formal"
+  theme: "Freedom struggle and modern India's future"
+  max_tokens_per_response: 200
+  total_podcast_duration_minutes: 10
+  ollama_model: "llama3"
+  output_format: "json"
+  output_file: "podcast_output.json"

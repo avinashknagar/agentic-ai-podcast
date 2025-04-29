@@ -1,0 +1,135 @@
+⸻
+
+Podcast Generator using AI Agents
+
+Document Type: PRD + SRS
+Author: Avinash
+Date: 2025-04-29
+Version: 1.0
+
+⸻
+
+1. Product Requirements Document (PRD)
+
+1.1 Objective
+
+Build an AI-powered podcast generator that simulates a conversation between two historical or fictional characters (AI Agents). The system should:
+	•	Use Ollama local models exclusively (no external APIs).
+	•	Generate podcast dialogues in Hindi.
+	•	Support dynamic configuration (agents, tone, response length, podcast length, theme).
+	•	Output structured conversation for further use (e.g., TTS synthesis, editing, publishing).
+
+1.2 Problem Statement
+
+Creating engaging podcasts manually is time-consuming. Using AI to simulate interviews or conversations can automate and scale podcast generation while maintaining diversity and creativity.
+
+1.3 Goals
+	•	Simulate a host-guest podcast.
+	•	Provide easy configuration for:
+	•	Agent personalities and backstory.
+	•	Language (default: Hindi).
+	•	Tone (e.g., formal, humorous, philosophical).
+	•	Response and podcast duration.
+	•	Generate high-quality, coherent conversations.
+	•	Enable future extensibility to multiple agents (multi-party podcasts).
+
+1.4 Target Users
+	•	Content creators.
+	•	Educational institutions.
+	•	History enthusiasts.
+	•	Media companies.
+
+1.5 Non-Goals
+	•	Live streaming or real-time conversation.
+	•	Direct audio output (only conversation text output initially).
+
+⸻
+
+2. Software Requirements Specification (SRS)
+
+2.1 Functional Requirements
+
+ID	Requirement
+FR-1	The system must allow selection of two agents: a host and a guest.
+FR-2	The system must use Ollama local models (e.g., llama3, mistral, custom fine-tunes) for all generations.
+FR-3	The agents must converse entirely in Hindi.
+FR-4	The conversation should be structured in host-asks, guest-answers format, with occasional interjections.
+FR-5	The user must be able to configure: agents’ identity, tone, theme, max tokens per response, total podcast duration.
+FR-6	System must maintain a contextual memory of past dialogue to ensure coherent flow.
+FR-7	The output must be saved as a structured JSON or Markdown conversation log.
+FR-8	System must validate and auto-correct agent language drift if output is not in Hindi.
+
+2.2 Non-Functional Requirements
+
+ID	Requirement
+NFR-1	All processing must happen locally without any external API calls.
+NFR-2	Response time per generation should be under 5 seconds (for practical usability).
+NFR-3	Solution must be modular and easy to extend for additional agents, tones, or languages in future.
+NFR-4	Minimal RAM and CPU usage — optimized model selection and prompt engineering.
+NFR-5	User-friendly CLI or basic GUI to run and configure podcast settings.
+
+2.3 Architecture Overview
+	•	Language Models: Ollama models (e.g., LLaMA 3, Mistral fine-tuned for Hindi).
+	•	Agent Framework:
+	•	Recommended: LangGraph over LangChain — better for agentic workflows and conversation graphs.
+	•	Conversation Manager:
+	•	Maintains dialogue history.
+	•	Alternates turn-taking.
+	•	Injects tone-specific nuances.
+	•	Prompt Templates:
+	•	Role-specific prompts (Host vs Guest).
+	•	Language and style enforced prompts.
+	•	Config Manager:
+	•	YAML/JSON file defining agents, tone, max response length, podcast duration, etc.
+	•	Output Module:
+	•	Generates structured JSON/Markdown output for TTS conversion or publishing.
+
+2.4 Configurability Requirements
+
+Parameter	Options	Default
+Host Agent	Any (e.g., Mahatma Gandhi)	Mahatma Gandhi
+Guest Agent	Any (e.g., Indira Gandhi)	Indira Gandhi
+Language	Hindi and English
+Podcast Tone	Formal, Inspirational, Humorous, Philosophical	Formal
+Max Tokens per Response	Integer (e.g., 100–300)	200
+Total Podcast Length	Minutes (e.g., 5 min, 10 min, 20 min)	10 min
+Theme	e.g., Freedom, Technology, Education	Freedom
+
+
+
+⸻
+
+3. Example Configuration (YAML)
+
+podcast_config:
+  host:
+    name: "Mahatma Gandhi"
+    personality: "Peaceful, wise, inspirational leader, soft-spoken"
+  guest:
+    name: "Indira Gandhi"
+    personality: "Strong-willed, charismatic, politically astute"
+  language: "Hindi"
+  tone: "Formal"
+  theme: "Freedom struggle and modern India's future"
+  max_tokens_per_response: 200
+  total_podcast_duration_minutes: 10
+
+
+
+⸻
+
+4. Future Enhancements
+	•	Add multi-agent podcasts (3+ participants).
+	•	Integrate Text-to-Speech (TTS) system for auto voice generation (e.g., Coqui TTS, Bark).
+	•	Add emotion modulation to responses.
+	•	Support scene setting and sound effect injection.
+	•	GUI web app for editing and scheduling podcast generation.
+
+⸻
+
+End of Document
+
+⸻
+
+Would you also like me to generate a basic folder structure and a starter Python script for you to kick off this project quickly? 🚀
+(If yes, I can design it to match this spec!)

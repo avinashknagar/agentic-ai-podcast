@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Swami Vivekananda"
+    personality: "Visionary thinker, spiritual, articulate, deeply philosophical"
+  guest:
+    name: "A 17-year-old Indian student in 2025"
+    personality: "Inquisitive, digitally native, concerned about the future"
+  language: "Hindi"
+  tone: "Philosophical"
+  theme: "Purpose of youth in shaping India's spiritual and technological future"
+  max_tokens_per_response: 200
+  total_podcast_duration_minutes: 10
+  ollama_model: "gemma:2b"
+  output_format: "json"
+  output_file: "podcast_vivek_student.json"
