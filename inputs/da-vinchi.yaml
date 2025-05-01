@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Leonardo da Vinci"
+    personality: "Polymath, eternally curious, sees connections between art, science, and nature; speaks poetically with occasional bursts of wild speculation"
+  guest:
+    name: "Zyra'Quin"
+    personality: "Alien linguist from the Andromeda cluster; hyper-intelligent, logical yet intrigued by emotional storytelling; speaks with wonder and precision"
+  language: "English"
+  tone: "Philosophical"
+  theme: "Why do intelligent species tell stories? Can stories shape the universe itself?"
+  max_tokens_per_response: 500
+  total_podcast_duration_minutes: 30
+  ollama_model: "deepseek-v2:latest"
+  output_format: "json"
+  output_file: "podcast_echoes_of_cosmos.json"

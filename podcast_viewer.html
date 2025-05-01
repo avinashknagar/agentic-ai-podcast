@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .metadata {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .metadata h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .metadata-item {
+            margin-bottom: 5px;
+        }
+        .metadata-label {
+            font-weight: bold;
+        }
+        .conversation {
+            margin-top: 20px;
+        }
+        .message {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+        .host {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196F3;
+        }
+        .guest {
+            background-color: #f1f8e9;
+            border-left: 4px solid #8bc34a;
+        }
+        .speaker-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #888;
+            text-align: right;
+            margin-top: 10px;
+        }
+        .file-input {
+            margin-bottom: 20px;
+        }
+        #jsonInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Podcast Viewer</h1>
+        
+        <div class="file-input">
+            <h3>Load Podcast JSON</h3>
+            <input type="file" id="fileInput" accept=".json">
+            <p>or</p>
+            <textarea id="jsonInput" rows="5" placeholder="Paste JSON here"></textarea>
+            <button onclick="loadFromTextarea()">Load JSON</button>
+        </div>
+        
+        <div id="podcast-content">
+            <!-- Content will be loaded here -->
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const json = JSON.parse(e.target.result);
+                        displayPodcast(json);
+                    } catch (error) {
+                        alert('Invalid JSON file: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+        
+        function loadFromTextarea() {
+            const jsonText = document.getElementById('jsonInput').value;
+            try {
+                const json = JSON.parse(jsonText);
+                displayPodcast(json);
+            } catch (error) {
+                alert('Invalid JSON: ' + error.message);
+            }
+        }
+        
+        function displayPodcast(podcastData) {
+            const container = document.getElementById('podcast-content');
+            
+            // Create metadata section
+            let html = `
+                <div class="metadata">
+                    <h2>Podcast Metadata</h2>
+                    <div class="metadata-item"><span class="metadata-label">Theme:</span> ${podcastData.metadata.theme || 'N/A'}</div>
+                    <div class="metadata-item"><span class="metadata-label">Host:</span> ${podcastData.metadata.host || 'N/A'}</div>
+                    <div class="metadata-item"><span class="metadata-label">Guest:</span> ${podcastData.metadata.guest || 'N/A'}</div>
+                    <div class="metadata-item"><span class="metadata-label">Language:</span> ${podcastData.metadata.language || 'N/A'}</div>
+                    <div class="metadata-item"><span class="metadata-label">Tone:</span> ${podcastData.metadata.tone || 'N/A'}</div>
+                    <div class="metadata-item"><span class="metadata-label">Duration:</span> ${podcastData.metadata.duration || 'N/A'}</div>
+                    <div class="metadata-item"><span class="metadata-label">Created:</span> ${formatDate(podcastData.created_at)}</div>
+                </div>
+            `;
+            
+            // Create conversation section
+            html += `<div class="conversation"><h2>Conversation</h2>`;
+            
+            if (podcastData.conversation && Array.isArray(podcastData.conversation)) {
+                podcastData.conversation.forEach(message => {
+                    const isHost = message.speaker === podcastData.metadata.host;
+                    const messageClass = isHost ? 'host' : 'guest';
+                    
+                    html += `
+                        <div class="message ${messageClass}">
+                            <div class="speaker-name">${message.speaker}</div>
+                            <div class="message-text">${formatText(message.text)}</div>
+                            <div class="timestamp">${formatTime(message.timestamp)}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        function formatText(text) {
+            // Replace newlines with <br> tags
+            return text.replace(/\n/g, '<br>');
+        }
+        
+        function formatTime(timestamp) {
+            if (!timestamp) return '';
+            
+            const date = new Date(timestamp * 1000);
+            return date.toLocaleTimeString();
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            
+            const date = new Date(dateString);
+            return date.toLocaleString();
+        }
+        
+        // Load example data if available
+        window.addEventListener('DOMContentLoaded', function() {
+            // You can add automatic loading of a default JSON file here if needed
+        });
+    </script>
+</body>
+</html>

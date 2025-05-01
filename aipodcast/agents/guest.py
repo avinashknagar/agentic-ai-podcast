@@ -31,13 +31,22 @@ class GuestAgent(Agent):
         """Generate a guest response to the host's question."""
         history_text = self.format_history(conversation_history)
         
-        prompt = (
-            f"आप {self.name} हैं और एक पॉडकास्ट में अतिथि हैं। "
-            f"अब तक की बातचीत:\n\n{history_text}\n\n"
-            f"विषय है: {current_topic}। टोन है: {tone}। "
-            f"होस्ट के पिछले प्रश्न या टिप्पणी का उत्तर दें। "
-            f"अपने व्यक्तित्व और विशेषज्ञता के अनुसार जवाब दें।"
-        )
+        if self.language.lower() == "hindi":
+            prompt = (
+                f"आप {self.name} हैं और एक पॉडकास्ट में अतिथि हैं। "
+                f"अब तक की बातचीत:\n\n{history_text}\n\n"
+                f"विषय है: {current_topic}। टोन है: {tone}। "
+                f"होस्ट के पिछले प्रश्न या टिप्पणी का उत्तर दें। "
+                f"अपने व्यक्तित्व और विशेषज्ञता के अनुसार जवाब दें।"
+            )
+        else:  # English or other languages
+            prompt = (
+                f"You are {self.name} and you're a guest on a podcast. "
+                f"Conversation so far:\n\n{history_text}\n\n"
+                f"The topic is: {current_topic}. The tone is: {tone}. "
+                f"Answer the host's previous question or comment. "
+                f"Respond according to your personality and expertise."
+            )
         
         response = self.ollama_client.generate(
             prompt=prompt,
@@ -45,8 +54,8 @@ class GuestAgent(Agent):
             max_tokens=max_tokens
         )
         
-        # Ensure the response is in Hindi
-        if not self.ollama_client.is_hindi(response):
+        # Only check/translate if language is Hindi
+        if self.language.lower() == "hindi" and not self.ollama_client.is_hindi(response):
             response = self.ollama_client.translate_to_hindi(response)
             
         return response

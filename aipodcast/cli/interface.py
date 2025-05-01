@@ -87,10 +87,21 @@ class CLI:
         if args.format:
             podcast_config['output_format'] = args.format
             
+        # Handle output file path
         if args.output:
             podcast_config['output_file'] = args.output
+        elif 'output_file' in podcast_config:
+            # If there's a configured output file in the YAML but no command-line override,
+            # we need to make sure it's an absolute path
+            if not os.path.isabs(podcast_config['output_file']):
+                # Convert to absolute path relative to the output directory
+                root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                project_root = os.path.dirname(root_dir)
+                output_dir = os.path.join(project_root, "output")
+                os.makedirs(output_dir, exist_ok=True)
+                podcast_config['output_file'] = os.path.join(output_dir, podcast_config['output_file'])
         else:
-            # If no output file specified, use default in output directory
+            # If no output file specified anywhere, use default with timestamp
             root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             project_root = os.path.dirname(root_dir)
             output_dir = os.path.join(project_root, "output")

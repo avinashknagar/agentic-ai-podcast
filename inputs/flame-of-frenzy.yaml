@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Thales the Unbound"
+    personality: "Former scholar of truth; now half-mad, speaks in riddles, poetic yet precise; views insanity as a path to higher vision"
+  guest:
+    name: "The Nameless Flame-Bearer"
+    personality: "Ancient forgotten god, once worshipped and now cursed; voice like a dying star, speaks slowly with cryptic gravitas"
+  language: "English"
+  tone: "Dark Philosophical"
+  theme: "Is madness the price of knowing too much? What truths lie beyond sanity?"
+  max_tokens_per_response: 100
+  total_podcast_duration_minutes: 30
+  ollama_model: "wizardlm2:7b"
+  output_format: "json"
+  output_file: "podcast_flame_of_frenzy.json"

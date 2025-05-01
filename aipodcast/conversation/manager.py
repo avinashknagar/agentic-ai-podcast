@@ -81,11 +81,20 @@ class ConversationManager:
     
     def generate_closing(self) -> str:
         """Generate a closing statement from the host."""
-        prompt = (
-            f"आप {self.host.name} हैं और अपने पॉडकास्ट को समाप्त कर रहे हैं। "
-            f"अतिथि {self.guest.name} को धन्यवाद दें और श्रोताओं से विदा लें। "
-            f"पॉडकास्ट के मुख्य बिंदुओं का संक्षिप्त सारांश दें।"
-        )
+        language = self.host.language
+        
+        if language.lower() == "hindi":
+            prompt = (
+                f"आप {self.host.name} हैं और अपने पॉडकास्ट को समाप्त कर रहे हैं। "
+                f"अतिथि {self.guest.name} को धन्यवाद दें और श्रोताओं से विदा लें। "
+                f"पॉडकास्ट के मुख्य बिंदुओं का संक्षिप्त सारांश दें।"
+            )
+        else:  # English or other languages
+            prompt = (
+                f"You are {self.host.name} and you are concluding your podcast. "
+                f"Thank your guest {self.guest.name} and say goodbye to the listeners. "
+                f"Provide a brief summary of the main points discussed in the podcast."
+            )
         
         closing = self.host.ollama_client.generate(
             prompt=prompt,
@@ -93,8 +102,8 @@ class ConversationManager:
             max_tokens=self.max_tokens_per_response
         )
         
-        # Ensure the closing is in Hindi
-        if not self.host.ollama_client.is_hindi(closing):
+        # Only check/translate if language is Hindi
+        if language.lower() == "hindi" and not self.host.ollama_client.is_hindi(closing):
             closing = self.host.ollama_client.translate_to_hindi(closing)
             
         return closing

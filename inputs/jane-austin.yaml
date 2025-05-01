@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Jane Austen"
+    personality: "Witty, sharp-tongued, deeply observant; master of subtle social commentary; skeptical but charming"
+  guest:
+    name: "The Baron (from The Rape of the Lock)"
+    personality: "Flamboyant, theatrical, delightfully vain; treats beauty and drama as sacred rituals"
+  language: "English"
+  tone: "Satirical / Literary"
+  theme: "Is Vanity the Most Enduring Romance?"
+  max_tokens_per_response: 250
+  total_podcast_duration_minutes: 12
+  ollama_model: "llama3.1:latest"
+  output_format: "json"
+  output_file: "podcast_locks_and_letters.json"

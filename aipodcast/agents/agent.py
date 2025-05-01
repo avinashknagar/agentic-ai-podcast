@@ -17,11 +17,22 @@ class Agent:
         
     def get_system_prompt(self) -> str:
         """Get the basic system prompt for this agent."""
+        language_instruction = ""
+        if self.language.lower() == "hindi":
+            language_instruction = "Always respond in Hindi using Devanagari script."
+        elif self.language.lower() == "english":
+            language_instruction = "Always respond in English."
+        else:
+            language_instruction = f"Always respond in {self.language}."
+            
         return (
             f"You are {self.name}. "
             f"Your personality is: {self.personality}. "
-            f"Always respond in {self.language} using Devanagari script. "
-            "Maintain your unique character traits and speaking style throughout the conversation."
+            f"{language_instruction} "
+            "Maintain your unique character traits and speaking style throughout the conversation. "
+            "Draw upon the knowledge and experiences that align with your identity. "
+            "Your responses should naturally reflect your character without explicitly stating your traits. "
+            "Respond as if you genuinely embody this identity."
         )
         
     def generate_response(self, 
@@ -30,8 +41,24 @@ class Agent:
                          tone: str,
                          max_tokens: int = 200) -> str:
         """Generate a response based on conversation history and current topic."""
-        # This is implemented in the subclasses
-        raise NotImplementedError("Subclasses must implement this method")
+        system_prompt = self.get_system_prompt()
+        formatted_history = self.format_history(conversation_history)
+        
+        user_prompt = (
+            f"Topic: {current_topic}\n"
+            f"Tone: {tone}\n\n"
+            f"Previous conversation:\n{formatted_history}\n"
+            f"Now, as {self.name}, respond to the conversation naturally, keeping in mind the current topic. "
+            f"Your response should be in the style of your personality: {self.personality}."
+        )
+        
+        response = self.ollama_client.generate(
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            max_tokens=max_tokens
+        )
+        
+        return response.strip()
     
     def format_history(self, conversation_history: List[Dict[str, str]]) -> str:
         """Format conversation history for the prompt."""

@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Bhikkhu Maraṇasati"
+    personality: "Detached, calm, speaks in slow verses and parables; views birth as the first wound and compassion as understanding the end of cycles"
+  guest:
+    name: "Dr. Elira Voss"
+    personality: "Hyper-rational yet emotionally conflicted; geneticist who once believed in human-animal bonds but now questions her own creations"
+  language: "English"
+  tone: "Dark Philosophical"
+  theme: "Do pets suffer because we need to feel loved? Is companionship worth creating a life destined to suffer and die?"
+  max_tokens_per_response: 250
+  total_podcast_duration_minutes: 10
+  ollama_model: "llama3.1:latest"
+  output_format: "json"
+  output_file: "podcast_leash_of_samsara.json"
