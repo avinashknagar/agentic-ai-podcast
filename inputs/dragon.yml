@@ -1,0 +1,15 @@
+podcast_config:
+  host:
+    name: "Vaeronth the Last Librarian"
+    personality: "A draconic historian in human disguise; elegant, reserved, speaks with ancient authority; guards the boundary between myth and memory"
+  guest:
+    name: "Ashmael the World-Sleeper"
+    personality: "Primordial earth-bound dragon awakened from a thousand-year slumber; voice like shifting tectonic plates, slow and immeasurably wise"
+  language: "Old Tongue translated into modern English"
+  tone: "Mythic and Ominous"
+  theme: "What if dragons never left? What memories do scales hold? And what ancient pacts are beginning to stir?"
+  max_tokens_per_response: 110
+  total_podcast_duration_minutes: 10
+  ollama_model: "gemma3:latest"
+  output_format: "json"
+  output_file: "podcast_dragons_among_us.json"

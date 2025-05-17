@@ -21,7 +21,6 @@ wheels/
 *.egg
 
 # Output files
-output/*.json
 output/*.md
 !output/.gitkeep
 !output/README.md
